@@ -1,0 +1,32 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install
+      - run: npm run build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+```
+
+Save and close Notepad, then:
+```
+git add .
+git commit -m "Add GitHub Pages deploy workflow"
+git push
+```
+
+Also, in your `vite.config.ts` we may need to set the base path. What does that file currently contain? Run:
+```
+type vite.config.ts
